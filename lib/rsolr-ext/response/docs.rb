@@ -41,12 +41,14 @@ module RSolr::Ext::Response::Docs
   end
   
   def self.extended(base)
-    d = base['response']['docs']
-    d.each{|doc| doc.extend RSolr::Ext::Doc }
-    d.extend Pageable
-    d.per_page = base.rows
-    d.start = base.start
-    d.total = base.total
+    unless base['response'].nil?
+		d = base['response']['docs']
+		d.each{|doc| doc.extend RSolr::Ext::Doc }
+		d.extend Pageable
+		d.per_page = base.rows
+		d.start = base.start
+		d.total = base.total
+    end	
   end
   
   def docs
